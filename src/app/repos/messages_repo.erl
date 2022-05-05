@@ -13,9 +13,10 @@ start() ->
 
 % messages_repo:insert({<< "Hello" >>})
 insert({Message}) -> 
-   Id = erlang:system_time(),
+   Time = erlang:system_time(),
+   Id = list_to_binary(uuid:uuid_to_string(uuid:get_v4())),  
    true = ets:insert(messages, {Id, Message}),
-   true = ets:insert(storage_messages, {Id, Message}),
+   true = ets:insert(storage_messages, {Time,Id, Message}),
    Id.
 
 % messages_repo:getLast()
