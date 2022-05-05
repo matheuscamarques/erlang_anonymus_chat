@@ -6,14 +6,22 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(event);
         const from = event.lastEventId;
         const message = document.createElement('p');
-        message.innerHTML = `${from}: ${event.data}`;
-        document.getElementById('messages').prepend(message);
+        message.innerHTML = `<span>${from}:</span> ${event.data}`;
+        document.getElementById('messages').appendChild(message);
     });
 
 
 
     const submit = document.getElementById('submit');
     const message = document.getElementById('message');
+    message.focus();
+    // SET KEY UP EVENT LISTENER
+    message.addEventListener('keyup', function (event) {
+        if(event.key === 'Enter' || event.keyCode === 13){
+            submit.click();
+        }
+    });
+
 
     submit.addEventListener('click', function (e) {
         e.preventDefault();
@@ -25,7 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify({
                 text: message.value
             })
-        }).then(response => response.text())
+        }).then( _ => {
+            message.value = '';
+        });
     });
 
     fetch('/message')
@@ -33,8 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             data.forEach(receive => {
                 const p = document.createElement('p');
-                p.innerHTML = `${receive.id}: ${receive.message}`;
-                document.getElementById('messages').prepend(p);
+                p.innerHTML = `<span>${receive.id}:</span> ${receive.message}`;
+                document.getElementById('messages').appendChild(p);
             })
         });
 });

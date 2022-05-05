@@ -1,0 +1,25 @@
+section{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.m-0-auto{
+    margin: 0 auto;
+}
+
+.w-100{
+    width: 100%;
+}
+
+#sender-form > #message{
+    width: 70%;
+}
+
+#sender-form > #submit{
+    width: 25%;
+}
+
+p > span {
+    font-weight: bold;
+    font-size: 12px;
+}

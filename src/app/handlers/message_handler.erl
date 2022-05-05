@@ -48,7 +48,7 @@ post_handler(Req0 = #{method := <<"POST">>}, State) ->
     {true, Req3, State}.
 
 get_handler(Req, State) ->
-    Messages = [#{<<"id">> => Id, <<"message">> => Message} || {Id, Message} <- messages_repo:get_all()],
+    Messages = [#{<<"id">> => Id, <<"message">> => Message} || {_, Id, Message} <- messages_repo:get_all()],
     Body = jiffy:encode(Messages),
     {Body, Req, State}.
 
