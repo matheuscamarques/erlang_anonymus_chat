@@ -16,7 +16,6 @@ insert({Message}) ->
    Time = erlang:system_time(),
    Id = list_to_binary(uuid:uuid_to_string(uuid:get_v4())),  
    true = ets:insert(messages, {Id, Message}),
-   Time = erlang:system_time(),
    true = ets:insert(storage_messages, {Time,Id, Message}),
    Id.
 

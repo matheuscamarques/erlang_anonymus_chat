@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const from = event.lastEventId;
         const message = document.createElement('p');
         message.innerHTML = `<span>${from}:</span> ${event.data}`;
-        document.getElementById('messages').appendChild(message);
+        document.getElementById('messages').prepend(message);
     });
 
 
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
             data.forEach(receive => {
                 const p = document.createElement('p');
                 p.innerHTML = `<span>${receive.id}:</span> ${receive.message}`;
-                document.getElementById('messages').appendChild(p);
+                document.getElementById('messages').prepend(p);
             })
         });
 });
