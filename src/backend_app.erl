@@ -24,7 +24,7 @@ start(_StartType, _StartArgs) ->
     ]),
     {ok, _} = cowboy:start_clear(
         hello_listener,
-        [{port, 8080}],
+        [{port, 80}],
         #{env => #{dispatch => Dispatch}}
     ),
     backend_sup:start_link().
