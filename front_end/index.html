@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Chat Anonymus</title>
+</head>
+
+<body>
+    <div id="sender-form">
+        <input type="text" name="message" id="message" placeholder="Enter your message">
+        <input type="submit" name="submit" id="submit" value="Send">
+    </div>
+    <div id="messages">
+
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const EventSource = window.EventSource;
+        const eventSource = new EventSource("http://localhost:8080");
+
+        eventSource.addEventListener('received_message', event => {
+            console.log(event);
+            const from = event.lastEventId;
+            const message = document.createElement('p');
+            message.innerHTML = `${from}: ${event.data}`;
+            document.getElementById('messages').appendChild(message);
+        });
+
+
+           
+            const submit = document.getElementById('submit');
+            const message = document.getElementById('message');
+
+            submit.addEventListener('click', function (e) {
+                e.preventDefault();
+                fetch('http://localhost:8080/message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: message.value
+                    })
+                }).then(response => response.json())
+            });
+
+
+    });
+
+</script>
