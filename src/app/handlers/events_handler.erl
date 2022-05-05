@@ -1,4 +1,4 @@
--module(hello_handler).
+-module(events_handler).
 -behaviour(cowboy_handler).
 -export([init/2]).
 -export([info/3]).

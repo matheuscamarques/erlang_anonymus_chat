@@ -5,6 +5,7 @@
     content_types_provided/2,
     content_types_accepted/2,
     post_handler/2,
+    get_handler/2,
     options/2
 ]).
 
@@ -19,7 +20,7 @@ options(Req, State) ->
     {ok, Req3, State}.
 
 allowed_methods(Req, State) ->
-    {[<<"POST">>,<<"OPTIONS">>], Req, State}.
+    {[<<"GET">>,<<"POST">>,<<"OPTIONS">>], Req, State}.
 
 content_types_accepted(Req, State) ->
     {[
@@ -29,6 +30,7 @@ content_types_accepted(Req, State) ->
 content_types_provided(Req, State) ->
     {
         [
+            {<<"application/json">>, get_handler},
             {<<"application/json">>, post_handler}
         ],
         Req,
@@ -38,12 +40,16 @@ content_types_provided(Req, State) ->
 % Create new Post
 post_handler(Req0 = #{method := <<"POST">>}, State) ->
     {ok, Data, Req1} = cowboy_req:read_body(Req0),
-    Message     = jiffy:decode(Data,[return_maps]),
-    Text = maps:get(<<"text">>,Message),
-    Id      = messages_repo:insert({Text}),
-    Req2    = cowboy_req:set_resp_body(Id, Req1),
-    Req3    = cowboy_req:set_resp_header(<<"access-control-allow-origin">>, <<"*">>, Req2),
+    Message          = jiffy:decode(Data,[return_maps]),
+    Text             = maps:get(<<"text">>,Message),
+    Id               = messages_repo:insert({Text}),
+    Req2             = cowboy_req:set_resp_body(Id, Req1),
+    Req3             = cowboy_req:set_resp_header(<<"access-control-allow-origin">>, <<"*">>, Req2),
     {true, Req3, State}.
 
+get_handler(Req, State) ->
+    Messages = [#{<<"id">> => Id, <<"message">> => Message} || {Id, Message} <- messages_repo:get_all()],
+    Body = jiffy:encode(Messages),
+    {Body, Req, State}.
 
     

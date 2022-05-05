@@ -3,17 +3,20 @@
     start/0,
     insert/1,
     get_last/0,
-    delete/1
+    delete/1,
+    get_all/0
 ]).
 
 start() -> 
-    ets:new(messages, [public,named_table]).
+    ets:new(messages, [public,named_table]),
+    ets:new(storage_messages, [public,named_table]).
 
 % messages_repo:insert({<< "Hello" >>})
 insert({Message}) -> 
    Time = now(),
    Id = list_to_binary(uuid:uuid_to_string(uuid:get_v4())),  
    true = ets:insert(messages, {Id, Message}),
+   true = ets:insert(storage_messages, {Id, Message}),
    Id.
 
 % messages_repo:getLast()
@@ -31,3 +34,6 @@ getById(Id) ->
         [Message] -> {message,Message};
         [] -> false
     end.
+
+get_all() ->
+   ets:tab2list(storage_messages).
