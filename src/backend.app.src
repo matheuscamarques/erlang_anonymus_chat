@@ -6,10 +6,15 @@
   {applications,
    [kernel,
     stdlib,
-    cowboy
+    cowboy,
+    jiffy,
+    uuid,
+    sasl
    ]},
   {env,[]},
-  {modules, []},
+  {modules, [
+           
+   ]},
 
   {licenses, ["Apache 2.0"]},
   {links, []}

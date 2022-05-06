@@ -16,8 +16,8 @@ start(_StartType, _StartArgs) ->
 
     Dispatch = cowboy_router:compile([
         { '_', [
-            {"/", cowboy_static, {file, "front_end/index.html"}},
-            {"/app/[...]", cowboy_static, {dir, "front_end/app"}},
+            {"/", cowboy_static, {priv_file,backend, "front_end/index.html"}},
+            {"/app/[...]", cowboy_static, {priv_dir,backend, "front_end/app"}},
             {"/events", events_handler, []},
             {"/message", message_handler, []}
         ] }
