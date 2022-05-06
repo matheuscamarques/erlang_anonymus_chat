@@ -2,7 +2,15 @@
 [{<<"cowboy">>,{pkg,<<"cowboy">>,<<"2.9.0">>},0},
  {<<"cowlib">>,{pkg,<<"cowlib">>,<<"2.11.0">>},1},
  {<<"jiffy">>,{pkg,<<"jiffy">>,<<"1.1.1">>},0},
- {<<"ranch">>,{pkg,<<"ranch">>,<<"1.8.0">>},1}]}.
+ {<<"quickrand">>,
+  {git,"https://github.com/okeuday/quickrand.git",
+       {ref,"fc152c8cd15460d37f00fe458611d416f949a540"}},
+  1},
+ {<<"ranch">>,{pkg,<<"ranch">>,<<"1.8.0">>},1},
+ {<<"uuid">>,
+  {git,"https://github.com/okeuday/uuid.git",
+       {ref,"72ad1ab049ddf065022454c490b7fa2e260988ea"}},
+  0}]}.
 [
 {pkg_hash,[
  {<<"cowboy">>, <<"865DD8B6607E14CF03282E10E934023A1BD8BE6F6BACF921A7E2A96D800CD452">>},
